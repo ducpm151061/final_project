@@ -1,29 +1,29 @@
-import time
-import subprocess
-import os
-import paho.mqtt.client as mqtt
-import json
-import paho.mqtt.subscribe as subscribe
-from Crypto.Cipher import AES
-import base64
-sensor_data = {'ID':0,'temperature': 0, 'humidity': 0}
-THINGSBOARD_HOST = '40.117.86.51'
-ACCESS_TOKEN = 'testdevice'
+import time 
+import subprocess 
+import os 
+import paho.mqtt.client as mqtt 
+import json 
+import paho.mqtt.subscribe as subscribe 
+from Crypto.Cipher import AES 
+import base64 
+sensor_data = {'ID':0,'temperature': 0,'humidity': 0} 
+THINGSBOARD_HOST = '113.178.79.147' 
+ACCESS_TOKEN = 'wifi01' 
 def on_message_print(client, userdata, message):
     print(message.payload.decode('utf8'))
 try:
 	while True:
 		#nhietdo=subscribe.callback(on_message_print, "temp", hostname="192.168.1.177")
-		msg = subscribe.simple("temp", hostname="192.168.1.111")
+		msg = subscribe.simple("temp2", hostname="192.168.0.6")
 		if(len(msg.payload)>5):
 			t1=time.time()
 			cipher=bytes(msg.payload.decode('utf-8'),'utf-8')
 			print(cipher)
-			key=b'\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61'
+			key=b'\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61'
 			iv=b'\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61'
 			tem=base64.b64decode(cipher)
 			realcipher=tem[0:16]
-			aes=AES.new(key,AES.MODE_ECB)
+			aes=AES.new(key,AES.MODE_CBC,iv)
 			decode=aes.decrypt(realcipher).decode('utf-8')
 			print(time.time()-t1)
 			print(decode)
