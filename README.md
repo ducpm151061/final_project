@@ -1,7 +1,7 @@
 # final_project
-# author : Phung Minh Duc
-# zigbee, wifi, gps
-# run file:
+# Author : Phung Minh Duc
+# Zigbee, wifi, gps
+# Run file:
   + Cách 1: Chạy từng file python (python3 ten_file.py)
   + Cách 2: Chạy file bash (sh run.sh)
 #Lưu ý: 
